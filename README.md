@@ -13,7 +13,7 @@ Google Photos also downloads multiple versions of the same photo and mark them a
 Use GitHub's `git clone` command or download this repository using Download option.
 
 ```bash
-git clone <repository address>
+git clone https://github.com/MadhavVij/photos_extractor.git
 ```
 
 ## Usage
