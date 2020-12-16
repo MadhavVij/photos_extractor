@@ -1,6 +1,6 @@
 import pytest
 import os
-from google_photos_extractor.image_extractor import (
+from photos_extractor.image_extractor import (
     extract_zipfiles,
     move_images,
     rename_files_remove_suffix,
