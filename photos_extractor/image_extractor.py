@@ -22,7 +22,7 @@ def extract_zipfiles(src: str = ".") -> None:
                     os.mkdir(f"{src}/{name}")
                     zip.extractall(path=f"{src}/{name}")
                 except zipfile.BadZipfile as e:
-                    print("BAD ZIP: " + filename)
+                    print(f"BAD ZIP: {filename}")
                     try:
                         os.remove(f"{src}/{filename}")
                     except OSError as e:
@@ -40,30 +40,29 @@ def move_images(src: str = ".", dst: str = "./copied_photos") -> None:
     """
     if not exists(dst):
         os.makedirs(dst, exist_ok=True)
-    exclude = set(["copied_photos"])
+    exclude = {"copied_photos"}
     for root, dirs, files in os.walk(src):
         dirs[:] = [d for d in dirs if d not in exclude]
         for image_name in files:
-            if image_name.split(".")[-1].lower() in [
-                "jpg",
-                "png",
-                "jpeg",
-                "gif",
-                "tiff",
-            ]:
-                if (
-                    f"{image_name.split('.')[-2]}-edited.{image_name.split('.')[-1]}"
-                    in files
-                    or f"{image_name.split('.')[-2]}-edit.{image_name.split('.')[-1]}"
-                    in files
-                    or f"{image_name.split('.')[-2]}-edt.{image_name.split('.')[-1]}"
-                    in files
-                    or f"{image_name.split('.')[-2]}-ed.{image_name.split('.')[-1]}"
-                    in files
-                ):
-                    continue
-                else:
-                    move(f"{root}/{image_name}", dst)
+            if (
+                image_name.split(".")[-1].lower()
+                in [
+                    "jpg",
+                    "png",
+                    "jpeg",
+                    "gif",
+                    "tiff",
+                ]
+                and f"{image_name.split('.')[-2]}-edited.{image_name.split('.')[-1]}"
+                not in files
+                and f"{image_name.split('.')[-2]}-edit.{image_name.split('.')[-1]}"
+                not in files
+                and f"{image_name.split('.')[-2]}-edt.{image_name.split('.')[-1]}"
+                not in files
+                and f"{image_name.split('.')[-2]}-ed.{image_name.split('.')[-1]}"
+                not in files
+            ):
+                move(f"{root}/{image_name}", dst)
 
 
 def rename_files_remove_suffix(directory_path: str = ".") -> None:
